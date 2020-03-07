@@ -1,12 +1,9 @@
-
-
 fn main() {
-    println!("hello"); 
+    println!("hello");
 
     println!("=============");
 
-
-    let x = vec![1,2,3,4,5];
+    let x = vec![1, 2, 3, 4, 5];
 
     for e in &x {
         println!("{:?}", e);
@@ -17,9 +14,6 @@ fn main() {
     // for e in x.iter() {
     //     println!("{:?}", *e);
     // }
-
-    
-
 
     println!("==============");
 
@@ -66,25 +60,22 @@ fn main() {
     // // fmt::Display -> {}
     // // fmt::Debug -> {:?}
 
-    // println!("{}", format!("Hello"));                
-    // println!("{}", format!("Hello, {}!", "world"));  
-    // println!("{}", format!("The number is {}", 1));  
-    // println!("{}", format!("{:?}", (3, 4)));         
-    // println!("{}", format!("{value}", value=4));     
-    // println!("{}", format!("{} {}", 1, 2));          
-    // println!("{}", format!("{:04}", 42));            
-
+    // println!("{}", format!("Hello"));
+    // println!("{}", format!("Hello, {}!", "world"));
+    // println!("{}", format!("The number is {}", 1));
+    // println!("{}", format!("{:?}", (3, 4)));
+    // println!("{}", format!("{value}", value=4));
+    // println!("{}", format!("{} {}", 1, 2));
+    // println!("{}", format!("{:04}", 42));
 
     // // comment
-    // f();  
+    // f();
 
-
-    // println!("===============");    
+    // println!("===============");
 
     // // test()
 
     // ttt();
-
 }
 
 fn ttt() {
@@ -132,16 +123,14 @@ fn test() {
     }
 
     let myvector = Vector2D { x: 3, y: 4 };
-    println!("{}", myvector);       // => "(3, 4)"
-    println!("{:?}", myvector);     // => "Vector2D {x: 3, y:4}"
+    println!("{}", myvector); // => "(3, 4)"
+    println!("{:?}", myvector); // => "Vector2D {x: 3, y:4}"
     println!("{:10.3b}", myvector);
 
     // println!("x={:?}", x);
 }
 
-
-fn try_debug_trait(){ 
-
+fn try_debug_trait() {
     use std::fmt;
 
     struct Point {
@@ -158,11 +147,9 @@ fn try_debug_trait(){
     let origin = Point { x: 0, y: 0 };
 
     println!("The origin is: {:?}", origin);
-
 }
 
 fn try_list() {
-
     use std::fmt; // 导入 `fmt` 模块。
 
     // 定义一个包含单个 `Vec` 的结构体 `List`。
@@ -179,7 +166,9 @@ fn try_list() {
             for (count, v) in vec.iter().enumerate() {
                 // 对每个元素（第一个元素除外）加上逗号。
                 // 使用 `?` 或 `try!` 来返回错误。
-                if count != 0 { write!(f, ", ")?; }
+                if count != 0 {
+                    write!(f, ", ")?;
+                }
                 write!(f, "{}", v)?;
             }
 
@@ -190,11 +179,10 @@ fn try_list() {
 
     let v = List(vec![1, 2, 3]);
     println!("{}", v);
-
 }
 
 fn try_fmt() {
-    use std::fmt::{self, Formatter, Display};
+    use std::fmt::{self, Display, Formatter};
 
     struct City {
         name: &'static str,
@@ -212,8 +200,15 @@ fn try_fmt() {
 
             // `write!` 和 `format!` 类似，但它会将格式化后的字符串写入
             // 一个缓冲区（即第一个参数f）中。
-            write!(f, "{}: {:.3}°{} {:.3}°{}",
-                   self.name, self.lat.abs(), lat_c, self.lon.abs(), lon_c)
+            write!(
+                f,
+                "{}: {:.3}°{} {:.3}°{}",
+                self.name,
+                self.lat.abs(),
+                lat_c,
+                self.lon.abs(),
+                lon_c
+            )
         }
     }
 
@@ -225,20 +220,47 @@ fn try_fmt() {
     }
 
     for city in [
-        City { name: "Dublin", lat: 53.347778, lon: -6.259722 },
-        City { name: "Oslo", lat: 59.95, lon: 10.75 },
-        City { name: "Vancouver", lat: 49.25, lon: -123.1 },
-    ].iter() {
+        City {
+            name: "Dublin",
+            lat: 53.347778,
+            lon: -6.259722,
+        },
+        City {
+            name: "Oslo",
+            lat: 59.95,
+            lon: 10.75,
+        },
+        City {
+            name: "Vancouver",
+            lat: 49.25,
+            lon: -123.1,
+        },
+    ]
+    .iter()
+    {
         println!("{}", *city);
     }
 
     for color in [
-        Color { red: 128, green: 255, blue: 90 },
-        Color { red: 0, green: 3, blue: 254 },
-        Color { red: 0, green: 0, blue: 0 },
-    ].iter() {
+        Color {
+            red: 128,
+            green: 255,
+            blue: 90,
+        },
+        Color {
+            red: 0,
+            green: 3,
+            blue: 254,
+        },
+        Color {
+            red: 0,
+            green: 0,
+            blue: 0,
+        },
+    ]
+    .iter()
+    {
         // 在添加了针对 fmt::Display 的实现后，请改用 {} 检验效果。
         println!("{:?}", *color)
     }
-
 }

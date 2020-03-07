@@ -2,24 +2,24 @@ fn main() {
     // 变量可以给出类型说明。
     let logical: bool = true;
 
-    let a_float: f64 = 1.0;  // 常规说明
-    let an_integer   = 5i32; // 后缀说明
+    let a_float: f64 = 1.0; // 常规说明
+    let an_integer = 5i32; // 后缀说明
 
     // 否则会按默认方式决定类型。
-    let default_float   = 3.0; // `f64`
-    let default_integer = 7;   // `i32`
-    
+    let default_float = 3.0; // `f64`
+    let default_integer = 7; // `i32`
+
     // 类型也可根据上下文自动推断。
     let mut inferred_type = 12; // 根据下一行的赋值推断为 i64 类型
     inferred_type = 4294967296i64;
-    
+
     // 可变的（mutable）变量，其值可以改变。
     let mut mutable = 12; // Mutable `i32`
     mutable = 21;
-    
+
     // // 报错！变量的类型并不能改变。
     // mutable = true;
-    
+
     // 但可以用掩蔽（shadow）来覆盖前面的变量。
     let mutable = true;
 
@@ -44,14 +44,12 @@ fn main() {
     // 使用下划线改善数字的可读性！
     println!("One million is written as {}", 1_000_000u32);
 
-
     println!("==========tuple===========");
 
-        // 包含各种不同类型的元组
-    let long_tuple = (1u8, 2u16, 3u32, 4u64,
-                      -1i8, -2i16, -3i32, -4i64,
-                      0.1f32, 0.2f64,
-                      'a', true);
+    // 包含各种不同类型的元组
+    let long_tuple = (
+        1u8, 2u16, 3u32, 4u64, -1i8, -2i16, -3i32, -4i64, 0.1f32, 0.2f64, 'a', true,
+    );
 
     // 通过元组的下标来访问具体的值
     println!("long tuple first value: {}", long_tuple.0);
@@ -67,8 +65,7 @@ fn main() {
     // let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
     // println!("too long tuple: {:?}", too_long_tuple);
     // 试一试 ^ 取消上面两行的注释，阅读编译器给出的错误信息。
-    
-    
+
     let pair = (1, true);
     println!("pair is {:?}", pair);
 
@@ -116,13 +113,12 @@ fn main() {
 
     // slice 可以指向数组的一部分
     println!("borrow a section of the array as a slice");
-    analyze_slice(&ys[1 .. 4]);
+    analyze_slice(&ys[1..4]);
 
     // // 越界的下标会引发致命错误（panic）
     // println!("{}", xs[5]);
 
-
-    let x = [1,2,3,4,5];
+    let x = [1, 2, 3, 4, 5];
 
     let s = &x[..];
 
@@ -145,8 +141,7 @@ fn analyze_slice(slice: &[i32]) {
     println!("the slice has {} elements", slice.len());
 }
 
-
-/* 
+/*
 
 # notes
 

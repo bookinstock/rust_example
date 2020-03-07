@@ -1,4 +1,3 @@
-
 fn main() {
     let an_integer = 1u32;
     let a_boolean = true;
@@ -61,7 +60,6 @@ fn main() {
 
     println!("outer long: {}", long_lived_binding);
 
-
     println!("===============decalre============");
 
     // 声明一个变量绑定
@@ -86,7 +84,6 @@ fn main() {
 
     println!("another binding: {}", another_binding);
 }
-
 
 /*
 

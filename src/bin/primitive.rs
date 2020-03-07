@@ -175,4 +175,9 @@ fn analyze_slice(slice: &[i32]) {
         - e.g. s = &a[..]
     - allocate in stack
 
+
+## ps
+
+- std::mem
+
 */

@@ -26,28 +26,27 @@ struct Rectangle {
 }
 
 fn main() {
-
     println!("=================struct==============");
     // 使用简单的写法初始化字段，并创建结构体
     let name = "Peter";
     let age = 27;
     let peter = Person { name, age };
-    
+
     // 以 Debug 方式打印结构体
     println!("{:?}", peter);
-    
+
     // 实例化结构体 `Point`
     let point: Point = Point { x: 0.3, y: 0.4 };
 
     // 访问 point 的字段
     println!("point coordinates: ({}, {})", point.x, point.y);
-    
+
     // 使用结构体更新语法创建新的 point，这样可以用到之前的 point 的字段
     let new_point = Point { x: 0.1, ..point };
-    
+
     // `new_point.y` 与 `point.y` 一样，因为这个字段就是从 `point` 中来的
     println!("second point: ({}, {})", new_point.x, new_point.y);
-    
+
     // 使用 `let` 绑定来解构 point
     let Point { x: my_x, y: my_y } = point;
 
@@ -79,10 +78,10 @@ fn main() {
 
     let pressed = WebEvent::KeyPress('x');
     // `to_owned()` 从一个字符串切片中创建一个具有所有权的 `String`。
-    let pasted  = WebEvent::Paste("my text".to_owned());
-    let click   = WebEvent::Click { x: 20, y: 80 };
-    let load    = WebEvent::PageLoad;
-    let unload  = WebEvent::PageUnload;
+    let pasted = WebEvent::Paste("my text".to_owned());
+    let click = WebEvent::Click { x: 20, y: 80 };
+    let load = WebEvent::PageLoad;
+    let unload = WebEvent::PageUnload;
 
     inspect(pressed);
     inspect(pasted);
@@ -103,7 +102,7 @@ enum WebEvent {
     KeyPress(char),
     Paste(String),
     // 或者一个普通的结构体。
-    Click { x: i64, y: i64 }
+    Click { x: i64, y: i64 },
 }
 
 // 此函数将一个 `WebEvent` enum 作为参数，无返回值。
@@ -117,10 +116,9 @@ fn inspect(event: WebEvent) {
         // 把 `Click` 解构给 `x` and `y`。
         WebEvent::Click { x, y } => {
             println!("clicked at x={}, y={}.", x, y);
-        },
+        }
     }
 }
-
 
 /*
 

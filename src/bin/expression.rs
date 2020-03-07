@@ -1,6 +1,3 @@
-
-
-
 fn main() {
     // 变量绑定
     let x = 5;
@@ -11,8 +8,6 @@ fn main() {
     15;
 
     ////
-
-
 
     let x = 5u32;
 
@@ -33,7 +28,6 @@ fn main() {
     println!("y is {:?}", y);
     println!("z is {:?}", z);
 }
-
 
 /*
 

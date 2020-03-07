@@ -120,11 +120,10 @@ fn main() {
     match work {
         // 再次注意到没有用完整路径。
         Civilian => println!("Civilians work!"),
-        Soldier  => println!("Soldiers fight!"),
+        Soldier => println!("Soldiers fight!"),
     }
 
     println!("=================list==============");
-
 
     use List::*;
 
@@ -160,10 +159,9 @@ fn main() {
                 // 因此使用一个对 tail 的引用
                 Cons(_, ref tail) => 1 + tail.len(),
                 // （递归的）基准情形（base case）：一个长度为 0 的空列表
-                Nil => 0
+                Nil => 0,
             }
         }
-
 
         // 返回列表的字符串表示（该字符串是堆分配的）
         fn stringify(&self) -> String {
@@ -172,10 +170,8 @@ fn main() {
                     // `format!` 和 `print!` 类似，但返回的是一个堆分配的字符串，
                     // 而不是打印结果到控制台上
                     format!("{}, {}", head, tail.stringify())
-                },
-                Nil => {
-                    format!("Nil")
-                },
+                }
+                Nil => format!("Nil"),
             }
         }
     }
@@ -192,11 +188,10 @@ fn main() {
     println!("linked list has length: {}", list.len());
     println!("{}", list.stringify());
 
-
     println!("======================const===================");
     // 全局变量是在在所有其他作用域之外声明的。
     static LANGUAGE: &'static str = "Rust";
-    const  THRESHOLD: i32 = 10;
+    const THRESHOLD: i32 = 10;
 
     fn is_big(n: i32) -> bool {
         // 在一般函数中访问常量

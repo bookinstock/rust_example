@@ -51,7 +51,6 @@ fn main() {
     // 232 的二进制补码是 -24
     println!(" 232 as a i8 is : {}", 232 as i8);
 
-
     println!("==============literal=============");
 
     // 带后缀的字面量，其类型在初始化时已经知道了。
@@ -70,7 +69,6 @@ fn main() {
     println!("size of `i` in bytes: {}", std::mem::size_of_val(&i));
     println!("size of `f` in bytes: {}", std::mem::size_of_val(&f));
 
-
     println!("=============type inference===============");
 
     // 因为有类型说明，编译器知道 `elem` 的类型是 u8。
@@ -79,14 +77,13 @@ fn main() {
     // 创建一个空向量（vector，即不定长的，可以增长的数组）。
     let mut vec = Vec::new();
     // 现在编译器还不知道 `vec` 的具体类型，只知道它是某种东西构成的向量（`Vec<_>`）
-    
+
     // 在向量中插入 `elem`。
     vec.push(elem);
     // 啊哈！现在编译器知道 `vec` 是 u8 的向量了（`Vec<u8>`）。
     // 试一试 ^ 注释掉 `vec.push(elem)` 这一行。
 
     println!("{:?}", vec);
-
 
     println!("===============alias===============");
 
@@ -102,20 +99,21 @@ fn main() {
     // `NanoSecond` = `Inch` = `u64_t` = `u64`.
     let nanoseconds: NanoSecond = 5 as u64_t;
     let inches: Inch = 2 as u64_t;
- 
+
     // let x: NanoSecond = 1;
     // let y: Inch = 2;
 
     // let z = x + y;
 
-    println!("z={}",z);
+    println!("z={}", z);
 
     // 注意类型别名*并不能*提供额外的类型安全，因为别名*并不是*新的类型。
-    println!("{} nanoseconds + {} inches = {} unit?",
-             nanoseconds,
-             inches,
-             nanoseconds + inches);
-
+    println!(
+        "{} nanoseconds + {} inches = {} unit?",
+        nanoseconds,
+        inches,
+        nanoseconds + inches
+    );
 }
 
 /*
@@ -126,14 +124,14 @@ fn main() {
 - cast
     - implicit conversion: coercion
     - explicit conversion: casting
-        - as 
+        - as
 
-- literal 
+- literal
 
 - type inference
 
 - alias
-    - type 
+    - type
         - alias not new type
 
 

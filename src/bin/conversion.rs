@@ -1,9 +1,6 @@
-
-
 #[warn(unused_variables)]
 
 fn main() {
-
     println!("============From and Into===========");
 
     let my_str = "hello";
@@ -25,12 +22,10 @@ fn main() {
     let num = Number::from(30);
     println!("My number is {:?}", num);
 
-
     let int = 5;
     // 试试删除类型说明
     let num: Number = int.into();
     println!("My number is {:?}", num);
-
 
     println!("===========TryFrom, TryInto========");
 
@@ -45,7 +40,7 @@ fn main() {
 
         fn try_from(value: i32) -> Result<Self, Self::Error> {
             if value % 2 == 0 {
-             Ok(EvenNumber(value))
+                Ok(EvenNumber(value))
             } else {
                 Err(())
             }
@@ -62,13 +57,12 @@ fn main() {
     let result: Result<EvenNumber, ()> = 5i32.try_into();
     assert_eq!(result, Err(()));
 
-
     println!("===============ToString, FromStr========");
 
     use std::string::ToString;
 
     struct Circle {
-        radius: i32
+        radius: i32,
     }
 
     impl ToString for Circle {
@@ -84,11 +78,8 @@ fn main() {
     let turbo_parsed = "10".parse::<i32>().unwrap();
 
     let sum = parsed + turbo_parsed;
-    println!{"Sum: {:?}", sum};
-
-
+    println! {"Sum: {:?}", sum};
 }
-
 
 /*
 

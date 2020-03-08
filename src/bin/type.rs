@@ -1,3 +1,24 @@
+/*
+
+
+# type
+
+- cast
+    - implicit conversion: coercion
+    - explicit conversion: casting
+        - as
+
+- literal
+
+- type inference
+
+- alias
+    - type
+        - alias not new type
+
+
+*/
+
 // 不显示类型转换产生的溢出警告。
 #![allow(overflowing_literals)]
 
@@ -115,24 +136,3 @@ fn main() {
         nanoseconds + inches
     );
 }
-
-/*
-
-
-# type
-
-- cast
-    - implicit conversion: coercion
-    - explicit conversion: casting
-        - as
-
-- literal
-
-- type inference
-
-- alias
-    - type
-        - alias not new type
-
-
-*/

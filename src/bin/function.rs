@@ -15,7 +15,7 @@
     - on the fly
 
         - capture
-            - move 
+            - move
                 - T
             - borrow
                 - &T, &mutT
@@ -96,51 +96,49 @@ fn main() {
     println!("=============method=============");
 
     #[derive(Debug)]
-    struct  Point {
+    struct Point {
         x: i32,
-        y: i32
+        y: i32,
     }
 
     impl Point {
         fn origin() -> Point {
-            Point {x:0, y:0}
+            Point { x: 0, y: 0 }
         }
 
         fn new(x: i32, y: i32) -> Point {
-            Point {x, y}
+            Point { x, y }
         }
     }
-
 
     let p = Point::origin();
 
     println!("p= {:?}", p);
 
-    let p = Point::new(1,2);
+    let p = Point::new(1, 2);
 
     println!("p={:?}", p);
 
     #[derive(Debug)]
     struct Rectangle {
-        p1: Point, 
-        p2: Point
+        p1: Point,
+        p2: Point,
     }
 
     impl Rectangle {
         fn area(&self) -> i32 {
-            let Point{x: x1, y:y1} = self.p1;
-            let Point{x:x2, y: y2} = self.p2;
-            ((x1-x2) * (y1-y2)).abs()
+            let Point { x: x1, y: y1 } = self.p1;
+            let Point { x: x2, y: y2 } = self.p2;
+            ((x1 - x2) * (y1 - y2)).abs()
         }
 
         fn perimeter(&self) -> i32 {
-            let Point{x: x1, y:y1} = self.p1;
-            let Point{x:x2, y: y2} = self.p2;
+            let Point { x: x1, y: y1 } = self.p1;
+            let Point { x: x2, y: y2 } = self.p2;
             2 * ((x1 - x2).abs() + (y1 - y2).abs())
         }
 
-
-        fn translate(&mut self, x:i32, y:i32){ 
+        fn translate(&mut self, x: i32, y: i32) {
             self.p1.x += x;
             self.p2.x += x;
             self.p1.y += y;
@@ -148,9 +146,9 @@ fn main() {
         }
     }
 
-    let mut rect = Rectangle{
+    let mut rect = Rectangle {
         p1: Point::origin(),
-        p2: Point::new(1,2),
+        p2: Point::new(1, 2),
     };
 
     println!("rect={:?}", rect);
@@ -183,11 +181,11 @@ fn main() {
 
     println!("=============closure=============");
 
-    fn add(n :i32) -> i32 {
+    fn add(n: i32) -> i32 {
         n + 1
     }
 
-    let add_lambda = |n| n + 1; 
+    let add_lambda = |n| n + 1;
 
     let n = 1;
     println!("add={:?}", add(n));
@@ -198,12 +196,11 @@ fn main() {
     // // 这些匿名函数（nameless function）被赋值给合适地命名的变量。
     // let closure_annotated = |i: i32| -> i32 { i + 1 };
     // let closure_inferred  = |i     |          i + 1  ;
-    
+
     // // 译注：将闭包绑定到引用的说法可能不准。
     // // 据[语言参考](https://doc.rust-lang.org/beta/reference/types.html#closure-types)
     // // 闭包表达式产生的类型就是 “闭包类型”，不属于引用类型，而且确实无法对上面两个
     // // `closure_xxx` 变量解引用。
-
 
     // 没有参数的闭包，返回一个 `i32` 类型。
     // 返回类型是自动推导的。
@@ -211,7 +208,6 @@ fn main() {
     println!("closure returning one: {}", one());
 
     ///
-
     use std::mem;
 
     let color = "green";
@@ -246,10 +242,9 @@ fn main() {
     inc();
     println!("{:?}", count);
 
-
     //let reborrow = &mut count;
     // ^ 试一试：将此行注释去掉。
-    
+
     // 不可复制类型（non-copy type）。
     let movable = Box::new(3);
 
@@ -279,17 +274,23 @@ fn main() {
     //println!("There're {} elements in vec", haystack.len());
     // ^ 取消上面一行的注释将导致编译时错误，因为借用检查不允许在变量被移动走
     // 之后继续使用它。
-    
+
     // 在闭包的签名中删除 `move` 会导致闭包以不可变方式借用 `haystack`，因此之后
     // `haystack` 仍然可用，取消上面的注释也不会导致错误。
 
     //////
 
-    fn apply<F>(f: F) where F: FnOnce() {
+    fn apply<F>(f: F)
+    where
+        F: FnOnce(),
+    {
         f();
     }
 
-    fn apply_to_3<F>(f: F) -> i32 where F: Fn(i32) -> i32 {
+    fn apply_to_3<F>(f: F) -> i32
+    where
+        F: Fn(i32) -> i32,
+    {
         f(3)
     }
 
@@ -382,8 +383,8 @@ fn main() {
 
     println!("============iter any============");
 
-    let vec1 = vec![1,2,3];
-    let vec2 = vec![4,5,6];
+    let vec1 = vec![1, 2, 3];
+    let vec2 = vec![4, 5, 6];
 
     println!("any 2 {}", vec1.iter().any(|&x| x == 2));
 
@@ -394,10 +395,9 @@ fn main() {
     let array1 = [1, 2, 3];
     let array2 = [4, 5, 6];
 
-    println!("2 in array1: {}", array1.iter()     .any(|&x| x == 2));
+    println!("2 in array1: {}", array1.iter().any(|&x| x == 2));
     // 对数组的 `into_iter()` 通常举出 `&i32`。
     println!("2 in array2: {}", array2.iter().any(|&x| x == 2));
-
 
     println!("============iter find============");
 
@@ -412,17 +412,20 @@ fn main() {
     // 对迭代器举出的元素的引用是 `&&i32` 类型。解构成 `i32` 类型。
     // 译注：注意 `find` 方法会把迭代器元素的引用传给闭包。迭代器元素自身
     // 是 `&i32` 类型，所以传给闭包的是 `&&i32` 类型。
-    println!("Find 2 in vec1: {:?}", iter     .find(|&&x| x == 2));
+    println!("Find 2 in vec1: {:?}", iter.find(|&&x| x == 2));
     // 对迭代器举出的元素的引用是 `&i32` 类型。解构成 `i32` 类型。
-    println!("Find 2 in vec2: {:?}", into_iter.find(| &x| x == 2));
+    println!("Find 2 in vec2: {:?}", into_iter.find(|&x| x == 2));
 
     let array1 = [1, 2, 3];
     let array2 = [4, 5, 6];
 
     // 对数组的 `iter()` 举出 `&i32`。
-    println!("Find 2 in array1: {:?}", array1.iter()     .find(|&&x| x == 2));
+    println!("Find 2 in array1: {:?}", array1.iter().find(|&&x| x == 2));
     // 对数组的 `into_iter()` 通常举出 `&i32``。
-    println!("Find 2 in array2: {:?}", array2.into_iter().find(|&&x| x == 2));
+    println!(
+        "Find 2 in array2: {:?}",
+        array2.into_iter().find(|&&x| x == 2)
+    );
 
     println!("=============higher order functions=============");
 
@@ -430,7 +433,7 @@ fn main() {
         n % 2 == 1
     }
 
-    let upper= 1000;
+    let upper = 1000;
 
     let mut acc = 0;
 
@@ -446,17 +449,15 @@ fn main() {
 
     // functional way
 
-    let _sum_of_squared_odd_numbers: u32 = 
-        (0..).map(|n| n*n)
-             .take_while(|&n| n<upper)
-             .filter(|&n| is_odd(n))
-             .fold(0, |sum, i| sum+i);
-
+    let _sum_of_squared_odd_numbers: u32 = (0..)
+        .map(|n| n * n)
+        .take_while(|&n| n < upper)
+        .filter(|&n| is_odd(n))
+        .fold(0, |sum, i| sum + i);
 
     println!("range={:?}", (1..4));
 
     println!("=============diverging functions=============");
-
 
     // fn foo() -> ! {
     //     panic!("hello")
@@ -469,7 +470,7 @@ fn main() {
         for i in 0..up_to {
             // 注意这个 match 表达式的返回值必须为 u32，
             // 因为 “addition” 变量是这个类型。
-            let addition: u32 = match i%2 == 1 {
+            let addition: u32 = match i % 2 == 1 {
                 // “i” 变量的类型为 u32，这毫无问题。
                 true => i,
                 // 另一方面，“continue” 表达式不返回 u32，但它仍然没有问题，
@@ -480,6 +481,8 @@ fn main() {
         }
         acc
     }
-    println!("Sum of odd numbers up to 9 (excluding): {}", sum_odd_numbers(9));
-
+    println!(
+        "Sum of odd numbers up to 9 (excluding): {}",
+        sum_odd_numbers(9)
+    );
 }

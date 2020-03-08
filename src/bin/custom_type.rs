@@ -1,5 +1,3 @@
-
-
 /*
 
 # custom type
@@ -21,7 +19,6 @@
 - keyword: ref - bind by reference
 
 */
-
 
 #[derive(Debug)]
 struct Person<'a> {

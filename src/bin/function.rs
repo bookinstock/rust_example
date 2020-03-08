@@ -1,7 +1,5 @@
-
-
 /*
-    
+
 # function
 
 - function
@@ -16,7 +14,6 @@
 */
 
 fn main() {
-
     println!("==============basic============");
 
     println!("=============method=============");

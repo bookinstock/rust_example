@@ -20,10 +20,39 @@
             - borrow
                 - &T, &mutT
 
+        - as input params
+
+            - Fn (&T) ok for &T capture
+
+            - FnMut (&mut T) ok for &T, &mut T capture
+
+            - FnOnce (T)  ok for &T, &mut T , T capture
+
+        - as output params
+
+
 - higher order functions
+
+    - functional way
 
 - diverging functions
 
+    - !
+        - panic!()
+        - loop {}
+        - exit()
+        - continue.
+
+
+## ps
+
+- ref and to_owned
+    - to_owned -> String
+
+- std::iter
+- std::iter::Iterator
+- std::iter::Iterator::any
+- std::iter::Iterator::find
 */
 
 fn main() {
@@ -256,7 +285,201 @@ fn main() {
 
     //////
 
+    fn apply<F>(f: F) where F: FnOnce() {
+        f();
+    }
+
+    fn apply_to_3<F>(f: F) -> i32 where F: Fn(i32) -> i32 {
+        f(3)
+    }
+
+    // use std::mem;
+
+    let greeting = "hello";
+    // 不可复制的类型。
+    // `to_owned` 从借用的数据创建有所有权的数据。
+    let mut farewell = "goodbye".to_owned();
+
+    // 捕获 2 个变量：通过引用捕获 `greeting`，通过值捕获 `farewell`。
+    let diary = || {
+        // `greeting` 通过引用捕获，故需要闭包是 `Fn`。
+        println!("I said {}.", greeting);
+
+        // 下文改变了 `farewell` ，因而要求闭包通过可变引用来捕获它。
+        // 现在需要 `FnMut`。
+        farewell.push_str("!!!");
+        println!("Then I screamed {}.", farewell);
+        println!("Now I can sleep. zzzzz");
+
+        // 手动调用 drop 又要求闭包通过值获取 `farewell`。
+        // 现在需要 `FnOnce`。
+        mem::drop(farewell);
+    };
+
+    // 以闭包作为参数，调用函数 `apply`。
+    apply(diary);
+
+    // println!("{:?}", farewell);
+
+    // 闭包 `double` 满足 `apply_to_3` 的 trait 约束。
+    let double = |x| 2 * x;
+
+    println!("3 doubled: {}", apply_to_3(double));
+
+    //
+    // fn apply<F>(f: F) where
+    //     F: Fn() {
+    //     f();
+    // }
+
+    // fn main() {
+    //     let x = 7;
+
+    //     // 捕获 `x` 到匿名类型中，并为它实现 `Fn`。
+    //     // 将闭包存储到 `print` 中。
+    //     let print = || println!("{}", x);
+
+    //     apply(print);
+    // }
+
+    fn call_me<F: Fn()>(f: F) {
+        f();
+    }
+
+    fn function() {
+        println!("haha");
+    }
+
+    let closure = || println!("hehe");
+
+    call_me(function);
+
+    call_me(closure);
+
+    //
+
+    fn create_fn() -> impl Fn() {
+        let text = "Fn".to_owned();
+
+        move || println!("{:?}", text)
+    }
+
+    fn create_fnmut() -> impl FnMut() {
+        let text = "FnMut".to_owned();
+
+        move || println!("{:?}", text)
+    }
+
+    let fn_plain = create_fn();
+    let mut fn_mut = create_fnmut();
+
+    fn_plain();
+    fn_mut();
+
+    // let x = "ssss".to_owned();
+
+    // let a:i32 = x;
+
+    println!("============iter any============");
+
+    let vec1 = vec![1,2,3];
+    let vec2 = vec![4,5,6];
+
+    println!("any 2 {}", vec1.iter().any(|&x| x == 2));
+
+    println!("any 2 {}", vec1.into_iter().any(|x| x == 2));
+
+    // println!("2 in vec1 {}", );
+
+    let array1 = [1, 2, 3];
+    let array2 = [4, 5, 6];
+
+    println!("2 in array1: {}", array1.iter()     .any(|&x| x == 2));
+    // 对数组的 `into_iter()` 通常举出 `&i32`。
+    println!("2 in array2: {}", array2.iter().any(|&x| x == 2));
+
+
+    println!("============iter find============");
+
+    let vec1 = vec![1, 2, 3];
+    let vec2 = vec![4, 5, 6];
+
+    // 对 vec1 的 `iter()` 举出 `&i32` 类型。
+    let mut iter = vec1.iter();
+    // 对 vec2 的 `into_iter()` 举出 `i32` 类型。
+    let mut into_iter = vec2.into_iter();
+
+    // 对迭代器举出的元素的引用是 `&&i32` 类型。解构成 `i32` 类型。
+    // 译注：注意 `find` 方法会把迭代器元素的引用传给闭包。迭代器元素自身
+    // 是 `&i32` 类型，所以传给闭包的是 `&&i32` 类型。
+    println!("Find 2 in vec1: {:?}", iter     .find(|&&x| x == 2));
+    // 对迭代器举出的元素的引用是 `&i32` 类型。解构成 `i32` 类型。
+    println!("Find 2 in vec2: {:?}", into_iter.find(| &x| x == 2));
+
+    let array1 = [1, 2, 3];
+    let array2 = [4, 5, 6];
+
+    // 对数组的 `iter()` 举出 `&i32`。
+    println!("Find 2 in array1: {:?}", array1.iter()     .find(|&&x| x == 2));
+    // 对数组的 `into_iter()` 通常举出 `&i32``。
+    println!("Find 2 in array2: {:?}", array2.into_iter().find(|&&x| x == 2));
+
     println!("=============higher order functions=============");
 
+    fn is_odd(n: u32) -> bool {
+        n % 2 == 1
+    }
+
+    let upper= 1000;
+
+    let mut acc = 0;
+
+    for n in 0.. {
+        let n_squared = n * n;
+        if n_squared >= upper {
+            break;
+        } else if is_odd(n_squared) {
+            acc += n_squared
+        }
+    }
+    println!("imperative style: {}", acc);
+
+    // functional way
+
+    let _sum_of_squared_odd_numbers: u32 = 
+        (0..).map(|n| n*n)
+             .take_while(|&n| n<upper)
+             .filter(|&n| is_odd(n))
+             .fold(0, |sum, i| sum+i);
+
+
+    println!("range={:?}", (1..4));
+
     println!("=============diverging functions=============");
+
+
+    // fn foo() -> ! {
+    //     panic!("hello")
+    // }
+
+    // foo()
+
+    fn sum_odd_numbers(up_to: u32) -> u32 {
+        let mut acc = 0;
+        for i in 0..up_to {
+            // 注意这个 match 表达式的返回值必须为 u32，
+            // 因为 “addition” 变量是这个类型。
+            let addition: u32 = match i%2 == 1 {
+                // “i” 变量的类型为 u32，这毫无问题。
+                true => i,
+                // 另一方面，“continue” 表达式不返回 u32，但它仍然没有问题，
+                // 因为它永远不会返回，因此不会违反匹配表达式的类型要求。
+                false => continue,
+            };
+            acc += addition;
+        }
+        acc
+    }
+    println!("Sum of odd numbers up to 9 (excluding): {}", sum_odd_numbers(9));
+
 }

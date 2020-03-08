@@ -1,5 +1,3 @@
-
-
 /*
 
 # crate
@@ -26,7 +24,4 @@ pub fn indirect_access() {
     private_function();
 }
 
-fn main() {
-
-
-}
+fn main() {}

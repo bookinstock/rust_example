@@ -1,3 +1,48 @@
+
+/*
+
+# conversion
+
+- trait
+
+    - From
+        - from
+
+    - Into
+        - into
+
+    - TryFrom
+
+        - return result
+
+    - TryInto
+
+        - return result
+
+
+    - ToString
+        - impl fmt::Display
+            - println!
+
+    - FromStr
+        - parse()
+
+
+## ps
+
+- std::convert
+- std::convert::From
+- std::convert::Into
+- std::convert::TryFrom
+- std::convert::TryInto
+
+- std::string
+- std::string::ToString
+
+- std::str
+- std::str::FromStr
+*/
+
 #[warn(unused_variables)]
 
 fn main() {
@@ -80,47 +125,3 @@ fn main() {
     let sum = parsed + turbo_parsed;
     println! {"Sum: {:?}", sum};
 }
-
-/*
-
-# conversion
-
-- trait
-
-    - From
-        - from
-
-    - Into
-        - into
-
-    - TryFrom
-
-        - return result
-
-    - TryInto
-
-        - return result
-
-
-    - ToString
-        - impl fmt::Display
-            - println!
-
-    - FromStr
-        - parse()
-
-
-## ps
-
-- std::convert
-- std::convert::From
-- std::convert::Into
-- std::convert::TryFrom
-- std::convert::TryInto
-
-- std::string
-- std::string::ToString
-
-- std::str
-- std::str::FromStr
-*/

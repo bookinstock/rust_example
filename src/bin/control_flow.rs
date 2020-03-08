@@ -1,3 +1,57 @@
+
+/*
+
+# control flow
+
+- if else, match
+
+    - match
+
+        - a
+
+        - a | b | c
+
+        - a..=b
+
+
+        - destructure
+            - tuple
+
+            - enum
+
+            - struct
+
+            - pointer
+
+        - guard
+            - if
+
+        - bind
+            - @
+
+- loop, while, for
+
+    - break, continue
+
+        - break return val
+
+    - for e in x
+        - Iterator
+            - into_iter (implicity)
+            - iter, iter_mut (explicity)
+                - iter (ref - borrow)
+                - iter_mut (mut ref - borrow)
+
+- if let
+
+- while let
+
+## ps
+- pointer
+    - destructure => &, ref, ref mut
+    - dereference => *
+*/
+
 fn main() {
     println!("=============if else===============");
     let n = 5;
@@ -349,56 +403,3 @@ fn main() {
         }
     }
 }
-
-/*
-
-# control flow
-
-- if else, match
-
-    - match
-
-        - a
-
-        - a | b | c
-
-        - a..=b
-
-
-        - destructure
-            - tuple
-
-            - enum
-
-            - struct
-
-            - pointer
-
-        - guard
-            - if
-
-        - bind
-            - @
-
-- loop, while, for
-
-    - break, continue
-
-        - break return val
-
-    - for e in x
-        - Iterator
-            - into_iter (implicity)
-            - iter, iter_mut (explicity)
-                - iter (ref - borrow)
-                - iter_mut (mut ref - borrow)
-
-- if let
-
-- while let
-
-## ps
-- pointer
-    - destructure => &, ref, ref mut
-    - dereference => *
-*/

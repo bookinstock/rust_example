@@ -1,3 +1,14 @@
+/*
+
+# var binding
+
+- mut
+
+- shadow
+
+*/
+
+
 fn main() {
     let an_integer = 1u32;
     let a_boolean = true;
@@ -85,12 +96,3 @@ fn main() {
     println!("another binding: {}", another_binding);
 }
 
-/*
-
-# var binding
-
-- mut
-
-- shadow
-
-*/

@@ -1,3 +1,28 @@
+
+
+/*
+
+# custom type
+
+- struct
+    - c-like struct
+    - tuple-like struct
+    - unit struct # -> trait
+    - deconstruct
+
+- enum
+    - use
+
+- constant
+    - const
+    - static
+
+## ps
+- keyword: ref - bind by reference
+
+*/
+
+
 #[derive(Debug)]
 struct Person<'a> {
     name: &'a str,
@@ -239,25 +264,3 @@ fn inspect(event: WebEvent) {
         }
     }
 }
-
-/*
-
-# custom type
-
-- struct
-    - c-like struct
-    - tuple-like struct
-    - unit struct # -> trait
-    - deconstruct
-
-- enum
-    - use
-
-- constant
-    - const
-    - static
-
-## ps
-- keyword: ref - bind by reference
-
-*/

@@ -1,3 +1,30 @@
+
+/*
+
+# hello
+
+- print
+    - println!
+
+- format
+    - format!
+
+- display
+    - "{}", x
+
+- debug
+    - "{:?}", x
+    - "{:#?}", x
+
+## ps
+
+- std::fmt
+- std::fmt::Binary
+- std::fmt::Debug
+- std::fmt::Display
+
+*/
+
 fn main() {
     println!("hello");
 
@@ -264,29 +291,3 @@ fn try_fmt() {
         println!("{:?}", *color)
     }
 }
-
-/*
-
-# hello
-
-- print
-    - println!
-
-- format
-    - format!
-
-- display
-    - "{}", x
-
-- debug
-    - "{:?}", x
-    - "{:#?}", x
-
-## ps
-
-- std::fmt
-- std::fmt::Binary
-- std::fmt::Debug
-- std::fmt::Display
-
-*/

@@ -1,3 +1,40 @@
+
+/*
+
+# notes
+
+- scalar
+    - isize
+    - usize
+    - float
+    - char
+    - bool
+    - ()
+
+- tuple
+    - (T1, T2, ...)
+        - e.g (1, true)
+        - t.0, t.1
+    - deconstruct
+        - (a, b, c, d) = tuple
+    - struct
+        - Point(1, 2)
+
+- array
+    - [T; size]
+        - e.g. [1,2,3]
+        - a[0], a[1]
+    - slice : &[T]
+        - e.g. s = &a[..]
+    - allocate in stack
+
+
+## ps
+
+- std::mem
+
+*/
+
 fn main() {
     // 变量可以给出类型说明。
     let logical: bool = true;
@@ -140,39 +177,3 @@ fn analyze_slice(slice: &[i32]) {
     println!("first element of the slice: {}", slice[0]);
     println!("the slice has {} elements", slice.len());
 }
-
-/*
-
-# notes
-
-- scalar
-    - isize
-    - usize
-    - float
-    - char
-    - bool
-    - ()
-
-- tuple
-    - (T1, T2, ...)
-        - e.g (1, true)
-        - t.0, t.1
-    - deconstruct
-        - (a, b, c, d) = tuple
-    - struct
-        - Point(1, 2)
-
-- array
-    - [T; size]
-        - e.g. [1,2,3]
-        - a[0], a[1]
-    - slice : &[T]
-        - e.g. s = &a[..]
-    - allocate in stack
-
-
-## ps
-
-- std::mem
-
-*/

@@ -1,3 +1,16 @@
+
+/*
+
+# expression
+
+- expression
+
+- statement
+    - binding var statement
+    - expression + ';'
+
+*/
+
 fn main() {
     // 变量绑定
     let x = 5;
@@ -28,15 +41,3 @@ fn main() {
     println!("y is {:?}", y);
     println!("z is {:?}", z);
 }
-
-/*
-
-# expression
-
-- expression
-
-- statement
-    - binding var statement
-    - expression + ';'
-
-*/

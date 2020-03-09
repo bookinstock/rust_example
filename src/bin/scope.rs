@@ -2,27 +2,27 @@
 
 # scope
 
+- RAII
+
 - ownership
-
-    - avoid dangling pointer
-
-- move
     
-    - Drop trait
+- move
 
 - borrow
 
-    - mutability
+    - immut
 
-    - frozen
+    - mut
+
+    - freeze
 
     - alias
 
-    - ref mod
+    - ref pattern
 
 - lifetime
 
-    - explicity mark
+    - explicit annotation
 
     - function
 
@@ -34,12 +34,11 @@
 
     - bound
 
-    - conversion
+    - coercion
 
     - static
 
-    - other
-
+    - elision
 
 ## ps:
 
@@ -66,6 +65,8 @@ fn main() {
     test_borrow_mut();
 
     test_borrow_freeze();
+
+    test_borrow_alias();
 }
 
 fn test_drop() {
@@ -228,22 +229,82 @@ fn test_borrow_mut() {
     // 改正 ^ 注释掉此行
 }
 
-// fn test_borrow_freeze() {
-//     let mut _mutable_integer = 7i32;
+fn test_borrow_freeze() {
+    let mut _mutable_integer = 7i32;
 
-//     {
-//         // 借用 `_mutable_integer`
-//         let large_integer = &_mutable_integer;
+    {
+        // 借用 `_mutable_integer`
+        let large_integer = &_mutable_integer;
 
-//         // 报错！`_mutable_integer` 在本作用域被冻结
-//         _mutable_integer = 50;
-//         // 改正 ^ 注释掉此行
+        // 报错！`_mutable_integer` 在本作用域被冻结
+        
+        // 改正 ^ 注释掉此行
 
-//         println!("Immutably borrowed {}", large_integer);
+        println!("Immutably borrowed {}", large_integer);
 
-//         // `large_integer` 离开作用域
-//     }
+        _mutable_integer = 50;
 
-//     // 正常运行！`_mutable_integer` 在这作用域没有冻结
-//     _mutable_integer = 3;
-// }
+        // `large_integer` 离开作用域
+    }
+
+    println!("x={:?}", _mutable_integer);
+
+    // 正常运行！`_mutable_integer` 在这作用域没有冻结
+    _mutable_integer = 3;
+
+    println!("x={:?}", _mutable_integer);
+}
+
+fn test_borrow_alias() {
+    struct Point { x: i32, y: i32, z: i32 }
+
+    let mut point = Point { x: 0, y: 0, z: 0 };
+
+    {
+        let borrowed_point = &point;
+        let another_borrow = &point;
+
+        // 通过引用和原始所有者来访问数据
+        println!("Point has coordinates: ({}, {}, {})",
+                 borrowed_point.x, another_borrow.y, point.z);
+
+        // 报错！不能可变地借用 `point` ，因为现在它有不可变的借用。
+        //let mutable_borrow = &mut point;
+        // 试一试 ^ 取消此行注释。
+
+        // 此处再次使用被借用的值
+        println!("Point has coordinates: ({}, {}, {})", borrowed_point.x, another_borrow.y, point.z);
+
+        // 不可变引用离开作用域
+    }
+
+    {
+        let mutable_borrow = &mut point;
+
+        // 通过可变引用来改变数据
+        mutable_borrow.x = 5;
+        mutable_borrow.y = 2;
+        mutable_borrow.z = 1;
+
+        // 报错！不能不可变地借用 `point`，因为现在它有可变的借用。
+        // let y = &point.y;
+        // 试一试 ^ 取消此行注释。
+
+        // 报错！不能打印，因为 `println!` 会创建一个不可变引用。
+        //println!("Point Z coordinate is {}", point.z);
+        // 试一试 ^ 取消此行注释。
+
+        // 可以工作！可变引用可以作为不可变的传给 `println!`。
+        println!("Point has coordinates: ({}, {}, {})",
+                 mutable_borrow.x, mutable_borrow.y, mutable_borrow.z);
+
+        // 可变引用离开作用域
+    }
+
+    // 现在又可以不可变地借用 `point` 了。
+    let borrowed_point = &point;
+    println!("Point now has coordinates: ({}, {}, {})",
+             borrowed_point.x, borrowed_point.y, borrowed_point.z);
+
+
+}

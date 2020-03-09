@@ -62,6 +62,10 @@ fn main() {
     println!("========borrow========");
 
     test_borrow();
+
+    test_borrow_mut();
+
+    test_borrow_freeze();
 }
 
 fn test_drop() {
@@ -176,6 +180,70 @@ fn test_borrow() {
     // `boxed_i32` 现在可以将所有权交给 `eat_i32` 并被销毁。
     //（译注：能够销毁是因为已经不存在对 `boxed_i32` 的引用）
     eat_box_i32(boxed_i32);
-
-
 }
+
+fn test_borrow_mut() {
+    #[allow(dead_code)]
+    #[derive(Clone, Copy)]
+    struct Book {
+        // `&'static str` 是一个对分配在只读内存区的字符串的引用
+        author: &'static str,
+        title: &'static str,
+        year: u32,
+    }
+
+    // 此函数接受一个对 Book 类型的引用
+    fn borrow_book(book: &Book) {
+        println!("I immutably borrowed {} - {} edition", book.title, book.year);
+    }
+
+    // 此函数接受一个对可变的 Book 类型的引用，它把年份 `year` 改为 2014 年
+    fn new_edition(book: &mut Book) {
+        book.year = 2014;
+        println!("I mutably borrowed {} - {} edition", book.title, book.year);
+    }   
+
+    // 创建一个名为 `immutabook` 的不可变的 Book 实例
+    let immutabook = Book {
+        // 字符串字面量拥有 `&'static str` 类型
+        author: "Douglas Hofstadter",
+        title: "Gödel, Escher, Bach",
+        year: 1979,
+    };
+
+    // 创建一个 `immutabook` 的可变拷贝，命名为 `mutabook`
+    let mut mutabook = immutabook;
+    
+    // 不可变地借用一个不可变对象
+    borrow_book(&immutabook);
+
+    // 不可变地借用一个可变对象
+    borrow_book(&mutabook);
+    
+    // 可变地借用一个可变对象
+    new_edition(&mut mutabook);
+    
+    // 报错！不能可变地借用一个不可变对象
+    // new_edition(&mut immutabook);
+    // 改正 ^ 注释掉此行
+}
+
+// fn test_borrow_freeze() {
+//     let mut _mutable_integer = 7i32;
+
+//     {
+//         // 借用 `_mutable_integer`
+//         let large_integer = &_mutable_integer;
+
+//         // 报错！`_mutable_integer` 在本作用域被冻结
+//         _mutable_integer = 50;
+//         // 改正 ^ 注释掉此行
+
+//         println!("Immutably borrowed {}", large_integer);
+
+//         // `large_integer` 离开作用域
+//     }
+
+//     // 正常运行！`_mutable_integer` 在这作用域没有冻结
+//     _mutable_integer = 3;
+// }

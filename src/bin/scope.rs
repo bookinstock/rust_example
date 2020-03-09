@@ -319,20 +319,27 @@ fn test_borrow_ref() {
 
     // 赋值语句中左边的 `ref` 关键字等价于右边的 `&` 符号。
     let ref ref_c1 = c;
+
+    // assert_eq!(ref_c1, &c);
+
+
     let ref_c2 = &c;
 
     println!("ref_c1 equals ref_c2: {}", *ref_c1 == *ref_c2);
+    println!("ref_c1 equals ref_c2: {}", ref_c1 == ref_c2);
 
     let point = Point { x: 0, y: 0 };
 
     // 在解构一个结构体时 `ref` 同样有效。
-    let _copy_of_x = {
+    let (_copy_of_x, _copy_of_x2) = {
         // `ref_to_x` 是一个指向 `point` 的 `x` 字段的引用。
         let Point { x: ref ref_to_x, y: _ } = point;
 
         // 返回一个 `point` 的 `x` 字段的拷贝。
-        *ref_to_x
+        
+        (*ref_to_x, *&point.x)
     };
+    println!("XXXXXXXXXX={}-{}", _copy_of_x, _copy_of_x2);
 
     // `point` 的可变拷贝
     let mut mutable_point = point;
@@ -348,16 +355,28 @@ fn test_borrow_ref() {
     println!("point is ({}, {})", point.x, point.y);
     println!("mutable_point is ({}, {})", mutable_point.x, mutable_point.y);
 
-    // 包含一个指针的可变元组
+
     let mut mutable_tuple = (Box::new(5u32), 3u32);
     
     {
-        // 解构 `mutable_tuple` 来改变 `last` 的值。
-        let (_, ref mut last) = mutable_tuple;
+        let (ref mut first, ref mut last) = mutable_tuple;
+        **first = 10u32;
         *last = 2u32;
     }
     
     println!("tuple is {:?}", mutable_tuple);
 
 
+}
+
+
+//
+fn ps_ref(){
+    let c = 'Q';
+
+    let ref ref_c1 = c;
+    // let ref mut ref_c1 = c;
+
+    assert_eq!(ref_c1, &c);
+    assert_eq!(*ref_c1, *&c);
 }

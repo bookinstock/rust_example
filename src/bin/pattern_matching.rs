@@ -38,6 +38,13 @@ fn main() {
     test_if_let();
     test_while_let();
     test_for();
+
+    println!("==========function==========");
+    test_function();
+
+    println!("==========tuple==========");
+
+    test_tuple();
 }
 
 fn test_match() {
@@ -83,6 +90,16 @@ fn test_for() {
     }
 }
 
+fn test_function() {
+    let x = (1,2,3);
+
+    fn f(&(a,b,c): &(i32,i32,i32)) {
+        println!("a={},b={},c={}", a,b,c);
+    }
+
+    f(&x);
+}
+
 fn test_literal() {
 
 }
@@ -100,7 +117,19 @@ fn test_stuct() {
 }
 
 fn test_tuple() {
+    let t = (1, 2, 3);
 
+    let (a,b,c) = t;
+    println!("a={},b={},c={}", a,b,c);
+
+    let (a,_,c)  = t;
+    println!("a={},c={}", a,c);
+
+    let (a, ..) = t;
+    println!("a={}", a);
+
+    let (..,c) = t;
+    println!("c={}", c);
 }
 
 fn test_variable() {

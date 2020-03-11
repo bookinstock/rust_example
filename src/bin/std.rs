@@ -1,5 +1,3 @@
-
-
 /*
 
 # std
@@ -21,7 +19,7 @@
 - panic!
 
 - HashMap
-    
+
     - alternate / custom key types
 
     - HashSet

@@ -1,5 +1,3 @@
-
-
 /*
 
 # pattern matching
@@ -32,7 +30,6 @@
 
 */
 
-
 fn main() {
     test_match();
     test_if_let();
@@ -54,13 +51,13 @@ fn test_match() {
         0 => "zero",
         1 => "one",
         2 => "two",
-        _ => "???" 
+        _ => "???",
     };
 
     println!("{}", x);
 }
 
-fn test_if_let()  {
+fn test_if_let() {
     let a = 1;
 
     if let 1 = a {
@@ -91,55 +88,41 @@ fn test_for() {
 }
 
 fn test_function() {
-    let x = (1,2,3);
+    let x = (1, 2, 3);
 
     f(&x);
 
-    fn f(&(a,b,c): &(i32,i32,i32)) {
-        println!("a={},b={},c={}", a,b,c);
+    fn f(&(a, b, c): &(i32, i32, i32)) {
+        println!("a={},b={},c={}", a, b, c);
     }
 }
 
-fn test_literal() {
+fn test_literal() {}
 
-}
+fn test_array() {}
 
-fn test_array() {
+fn test_enum() {}
 
-}
-
-fn test_enum() {
-
-}
-
-fn test_stuct() {
-
-}
+fn test_stuct() {}
 
 fn test_tuple() {
     let t = (1, 2, 3);
 
-    let (a,b,c) = t;
-    println!("a={},b={},c={}", a,b,c);
+    let (a, b, c) = t;
+    println!("a={},b={},c={}", a, b, c);
 
-    let (a,_,c)  = t;
-    println!("a={},c={}", a,c);
+    let (a, _, c) = t;
+    println!("a={},c={}", a, c);
 
     let (a, ..) = t;
     println!("a={}", a);
 
-    let (..,c) = t;
+    let (.., c) = t;
     println!("c={}", c);
 }
 
-fn test_variable() {
+fn test_variable() {}
 
-}
+fn test_wildcard() {}
 
-fn test_wildcard() {
-
-}
-
-fn test_placeholder() {
-
-}
+fn test_placeholder() {}

@@ -5,7 +5,7 @@
 - RAII
 
 - ownership
-    
+
 - move
 
 - borrow
@@ -56,7 +56,6 @@ fn main() {
     test_move();
 
     test_box_mut();
-
 
     println!("========borrow========");
 
@@ -115,7 +114,7 @@ fn test_move() {
     let b = a;
     // 把 `a` 的指针地址（而非数据）复制到 `b`。现在两者都指向
     // 同一个堆分配的数据，但是现在是 `b` 拥有它。
-    
+
     // 报错！`a` 不能访问数据，因为它不再拥有那部分堆上的内存。
     //println!("a contains: {}", a);
     // 试一试 ^ 去掉此行注释
@@ -127,8 +126,6 @@ fn test_move() {
     // 报错！和前面出错的原因一样。
     //println!("b contains: {}", b);
     // 试一试 ^ 去掉此行注释
-
-
 }
 
 fn test_box_mut() {
@@ -203,14 +200,17 @@ fn test_borrow_mut() {
 
     // 此函数接受一个对 Book 类型的引用
     fn borrow_book(book: &Book) {
-        println!("I immutably borrowed {} - {} edition", book.title, book.year);
+        println!(
+            "I immutably borrowed {} - {} edition",
+            book.title, book.year
+        );
     }
 
     // 此函数接受一个对可变的 Book 类型的引用，它把年份 `year` 改为 2014 年
     fn new_edition(book: &mut Book) {
         book.year = 2014;
         println!("I mutably borrowed {} - {} edition", book.title, book.year);
-    }   
+    }
 
     // 创建一个名为 `immutabook` 的不可变的 Book 实例
     let immutabook = Book {
@@ -222,16 +222,16 @@ fn test_borrow_mut() {
 
     // 创建一个 `immutabook` 的可变拷贝，命名为 `mutabook`
     let mut mutabook = immutabook;
-    
+
     // 不可变地借用一个不可变对象
     borrow_book(&immutabook);
 
     // 不可变地借用一个可变对象
     borrow_book(&mutabook);
-    
+
     // 可变地借用一个可变对象
     new_edition(&mut mutabook);
-    
+
     // 报错！不能可变地借用一个不可变对象
     // new_edition(&mut immutabook);
     // 改正 ^ 注释掉此行
@@ -245,7 +245,7 @@ fn test_borrow_freeze() {
         let large_integer = &_mutable_integer;
 
         // 报错！`_mutable_integer` 在本作用域被冻结
-        
+
         // 改正 ^ 注释掉此行
 
         println!("Immutably borrowed {}", large_integer);
@@ -264,7 +264,11 @@ fn test_borrow_freeze() {
 }
 
 fn test_borrow_alias() {
-    struct Point { x: i32, y: i32, z: i32 }
+    struct Point {
+        x: i32,
+        y: i32,
+        z: i32,
+    }
 
     let mut point = Point { x: 0, y: 0, z: 0 };
 
@@ -273,15 +277,20 @@ fn test_borrow_alias() {
         let another_borrow = &point;
 
         // 通过引用和原始所有者来访问数据
-        println!("Point has coordinates: ({}, {}, {})",
-                 borrowed_point.x, another_borrow.y, point.z);
+        println!(
+            "Point has coordinates: ({}, {}, {})",
+            borrowed_point.x, another_borrow.y, point.z
+        );
 
         // 报错！不能可变地借用 `point` ，因为现在它有不可变的借用。
         //let mutable_borrow = &mut point;
         // 试一试 ^ 取消此行注释。
 
         // 此处再次使用被借用的值
-        println!("Point has coordinates: ({}, {}, {})", borrowed_point.x, another_borrow.y, point.z);
+        println!(
+            "Point has coordinates: ({}, {}, {})",
+            borrowed_point.x, another_borrow.y, point.z
+        );
 
         // 不可变引用离开作用域
     }
@@ -303,23 +312,28 @@ fn test_borrow_alias() {
         // 试一试 ^ 取消此行注释。
 
         // 可以工作！可变引用可以作为不可变的传给 `println!`。
-        println!("Point has coordinates: ({}, {}, {})",
-                 mutable_borrow.x, mutable_borrow.y, mutable_borrow.z);
+        println!(
+            "Point has coordinates: ({}, {}, {})",
+            mutable_borrow.x, mutable_borrow.y, mutable_borrow.z
+        );
 
         // 可变引用离开作用域
     }
 
     // 现在又可以不可变地借用 `point` 了。
     let borrowed_point = &point;
-    println!("Point now has coordinates: ({}, {}, {})",
-             borrowed_point.x, borrowed_point.y, borrowed_point.z);
-
-
+    println!(
+        "Point now has coordinates: ({}, {}, {})",
+        borrowed_point.x, borrowed_point.y, borrowed_point.z
+    );
 }
 
 fn test_borrow_ref() {
     #[derive(Clone, Copy)]
-    struct Point { x: i32, y: i32 }
+    struct Point {
+        x: i32,
+        y: i32,
+    }
 
     let c = 'Q';
 
@@ -327,7 +341,6 @@ fn test_borrow_ref() {
     let ref ref_c1 = c;
 
     // assert_eq!(ref_c1, &c);
-
 
     let ref_c2 = &c;
 
@@ -339,10 +352,13 @@ fn test_borrow_ref() {
     // 在解构一个结构体时 `ref` 同样有效。
     let (_copy_of_x, _copy_of_x2) = {
         // `ref_to_x` 是一个指向 `point` 的 `x` 字段的引用。
-        let Point { x: ref ref_to_x, y: _ } = point;
+        let Point {
+            x: ref ref_to_x,
+            y: _,
+        } = point;
 
         // 返回一个 `point` 的 `x` 字段的拷贝。
-        
+
         (*ref_to_x, *&point.x)
     };
     println!("XXXXXXXXXX={}-{}", _copy_of_x, _copy_of_x2);
@@ -352,27 +368,30 @@ fn test_borrow_ref() {
 
     {
         // `ref` 可以与 `mut` 结合以创建可变引用。
-        let Point { x: _, y: ref mut mut_ref_to_y } = mutable_point;
+        let Point {
+            x: _,
+            y: ref mut mut_ref_to_y,
+        } = mutable_point;
 
         // 通过可变引用来改变 `mutable_point` 的字段 `y`。
         *mut_ref_to_y = 1;
     }
 
     println!("point is ({}, {})", point.x, point.y);
-    println!("mutable_point is ({}, {})", mutable_point.x, mutable_point.y);
-
+    println!(
+        "mutable_point is ({}, {})",
+        mutable_point.x, mutable_point.y
+    );
 
     let mut mutable_tuple = (Box::new(5u32), 3u32);
-    
+
     {
         let (ref mut first, ref mut last) = mutable_tuple;
         **first = 10u32;
         *last = 2u32;
     }
-    
+
     println!("tuple is {:?}", mutable_tuple);
-
-
 }
 
 fn test_lifetime() {
@@ -410,21 +429,19 @@ fn test_lifetime_annotation() {
 
     // 创建变量，稍后用于借用。
     let (four, nine) = (4, 9);
-    
+
     // 两个变量的借用（`&`）都传进函数。
     print_refs(&four, &nine);
     // 任何被借用的输入量都必须比借用者生存得更长。
     // 也就是说，`four` 和 `nine` 的生命周期都必须比 `print_refs` 的长。
-    
+
     failed_borrow();
     // `failed_borrow` 未包含引用，因此不要求 `'a` 长于函数的生命周期，
     // 但 `'a` 寿命确实更长。因为该生命周期从未被约束，所以默认为 `'static`。
-
 }
 
-
 //
-fn ps_ref(){
+fn ps_ref() {
     let c = 'Q';
 
     let ref ref_c1 = c;

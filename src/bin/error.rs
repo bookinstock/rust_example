@@ -13,7 +13,7 @@
     - combinators: and_then
 
 - Result
-    
+
     - map for Result
 
     - alias for Result

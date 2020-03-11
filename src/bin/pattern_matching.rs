@@ -93,11 +93,11 @@ fn test_for() {
 fn test_function() {
     let x = (1,2,3);
 
+    f(&x);
+
     fn f(&(a,b,c): &(i32,i32,i32)) {
         println!("a={},b={},c={}", a,b,c);
     }
-
-    f(&x);
 }
 
 fn test_literal() {

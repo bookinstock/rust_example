@@ -39,6 +39,9 @@ fn main() {
     println!("==========function==========");
     test_function();
 
+    println!("==========closure==========");
+    test_closure();
+
     println!("==========tuple==========");
 
     test_tuple();
@@ -95,6 +98,16 @@ fn test_function() {
     fn f(&(a, b, c): &(i32, i32, i32)) {
         println!("a={},b={},c={}", a, b, c);
     }
+}
+
+fn test_closure() {
+    let x = (1, 2, 3);
+
+    let proc = |&(a, b, c)| {
+        println!("a={},b={},c={}", a, b, c);
+    };
+
+    proc(&x);
 }
 
 fn test_literal() {}
